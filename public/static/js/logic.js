@@ -211,7 +211,7 @@ function onEachFeature(feature, layer) {
   );
 }
 
-d3.csv("./static/data/AugustSeptembercovid.csv")
+d3.csv("./static/data/AugustSeptemberCovid.csv")
   .then(function (data) {
     latestDate = data[0].date;
     // console.log("latest date", latestDate)
