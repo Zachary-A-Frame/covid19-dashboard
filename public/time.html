@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+     <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          <title>US map</title>
+
+          <!-- Leaflet CSS -->
+          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+
+          <!-- Our CSS -->
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+               crossorigin="anonymous">
+
+          <link rel="stylesheet" type="text/css" href="static/css/style.css">
+          <link rel="stylesheet" href="assets/css/style.css">
+          <link rel="stylesheet" href="assets/css/d3Style.css">
+     </head>
+     <style>
+          h2,
+          p {
+               text-align: left
+          }
+     </style>
+
+     <body>
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+               <a class="navbar-brand" href="/">Map Data</a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+               </button>
+
+               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                         <li class="nav-item active">
+                              <a class="nav-link" href="/state.html">Data By State <span
+                                        class="sr-only">(current)</span></a>
+                         </li>
+                         <li class="nav-item active">
+                              <a class="nav-link" href="/time.html">Data Over Time <span
+                                        class="sr-only">(current)</span></a>
+                         </li>
+                         <li class="nav-item active">
+                              <a class="nav-link" href="/utility/AugustSeptemberCovid.csv" download> Download CSV <span
+                                        class="sr-only">(current)</span>
+                              </a>
+                         </li>
+                    </ul>
+
+               </div>
+          </nav>
+          <!-- The div that holds our map -->
+          <!-- Andrew
+          <div class="jumbotron">
+               <div id="map">
+               </div>
+          </div> -->
+          <!-- Matt  -->
+          <!-- <div class="container">
+               <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                         <h1>Covid Data by State</h1>
+                    </div>
+               </div>
+               <div class="row">
+                    <div class="col-xs-12  col-md-9">
+                         <div class="well">
+                              <h5>Select a Date</h5>
+                              <select id="selDataset" onchange="optionChanged(this.value)"></select>
+                         </div>
+                         <div id="scatter">
+                              We append our chart here. -->
+          </div>
+          </div>
+          </div>
+          <div class="jumbotron">
+               <div class="row">
+                    <div class="col-xs-12  col-md-9">
+                         <div class="article">
+                              <h2>Covid 19 Correlations</h2>
+
+                              <p>Select a date and view correlations for each state between Tests, Cases and
+                                   Hospitalizations and Deaths. Click on each option in the X and Y axis to update
+                                   information. Hover mouse over circle to view data.
+
+
+                              </p>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          </div> -->
+          <!-- Zach -->
+          <div id="plotly"></div>
+
+          <div class="container">
+               <div class="row">
+               </div>
+               <div class="row">
+                    <h5>First State:</h5>
+                    <select id="selDataset1"></select>
+                    <h5>Second State:</h5>
+                    <select id="selDataset2"></select>
+               </div>
+               <div>
+                    <h5>Select Data:</h5>
+                    <select id="selectData">
+                         <option value="deaths">Deaths</option>
+                         <option value="hospitalizedCurrently">Hospitalized Currently</option>
+                         <option value="positive">Positive</option>
+                         <option value="totalTestResults">Total Test Results</option>
+                    </select>
+                    <div id="line"></div>
+               </div>
+          </div>
+          </div>
+          <!-- All of Andrew's Requirements  -->
+          <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+          <!-- D3 JavaScript -->
+          <script src="https://d3js.org/d3.v5.min.js"></script>
+          <!--config file for the api key-->
+          <script type="text/javascript" src="static/js/config.js"></script>
+          <!--us state maps-->
+          <script type="text/javascript" src="static/js/us-states.js"></script>
+          <!-- Leaflet JavaScript -->
+          <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+
+          <!-- All of Matt's Requirements  -->
+          <script src="https://d3js.org/d3.v5.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+          <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+          <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+               integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+               crossorigin="anonymous"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+               integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+               crossorigin="anonymous"></script>
+          <!-- All of Zach's Requirements -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+          <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+          <!-- Our JavaScript -->
+          <!-- Andrew  -->
+          <!-- <script type="text/javascript" src="static/js/logic.js"></script> -->
+          <!-- Matt  -->
+          <!-- <script type="text/javascript" src="assets/js/app.js"></script> -->
+          <!-- Zach -->
+          <script type="text/javascript" src="utility/app.js"></script>
+
+     </body>
+
+</html>
