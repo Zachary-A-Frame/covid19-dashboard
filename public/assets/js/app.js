@@ -141,6 +141,7 @@ function visualize(csvData) {
         .offset([40, -60])
         .html(function (d) {
 
+
             //put together textbox and format numbers - poverty is %
             var stateLine = `<div>${d.state}</div>`;
 
