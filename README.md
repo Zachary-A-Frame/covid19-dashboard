@@ -4,4 +4,4 @@
 
 ### You can clone this and run it using node app.js.  
 
-App is built using JS, 
+App is built using JS for front end, ExpressJS for our backend, Python for ETL. 
